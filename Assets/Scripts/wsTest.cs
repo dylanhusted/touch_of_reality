@@ -24,17 +24,17 @@ public class wsTest : MonoBehaviour {
                 var resp = JSON.Parse(reply);
                 if (resp["type"] == "push")
                 {
-                    if (resp["push"]["type"] == "sms_changed")
+                    if (resp["push"]["type"] == "sms_changed" && resp["push"]["notifications"][0]["title"] != null)
                     {
-                        Debug.Log(resp["push"]["notification"]["title"] + ": " + resp["push"]["notification"]["body"]);
+                        Debug.Log(resp["push"]["notifications"][0]["title"] + ": " + resp["push"]["notifications"][0]["body"]);
                     }
-                    //if (resp["push"]["type"] == "mirror")
-                    //{
-                    //    if (resp["push"]["notification"]["application_name"] == "Messenger")
-                    //    {
-                    //        Debug.Log(resp["push"]["notification"]["title"] + ": " + resp["push"]["notification"]["body"]);
-                    //    }
-                    //}
+                    if (resp["push"]["type"] == "mirror")
+                    {
+                        if (resp["push"]["application_name"] == "Messenger")
+                        {
+                            Debug.Log(resp["push"]["title"] + ": " + resp["push"]["body"]);
+                        }
+                    }
                 }
             }
             if (w.error != null)
