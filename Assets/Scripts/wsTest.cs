@@ -20,7 +20,7 @@ public class wsTest : MonoBehaviour {
             string reply = w.RecvString();
             if (reply != null)
             {
-                // Debug.Log("Received: " + reply);
+                Debug.Log("Received: " + reply);
                 var resp = JSON.Parse(reply);
                 if (resp["type"] == "push")
                 {
@@ -33,6 +33,14 @@ public class wsTest : MonoBehaviour {
                         if (resp["push"]["application_name"] == "Messenger")
                         {
                             Debug.Log(resp["push"]["title"] + ": " + resp["push"]["body"]);
+                        }
+                        if (resp["push"]["application_name"] == "Pushbullet" && resp["push"]["title"] == "Incoming call")
+                        {
+                            Debug.Log(resp["push"]["title"] + " at " + DateTime.Now.ToShortTimeString());
+                        }
+                        if (resp["push"]["application_name"] == "Gmail")
+                        {
+                            Debug.Log("New email from " + resp["push"]["title"]);
                         }
                     }
                 }
